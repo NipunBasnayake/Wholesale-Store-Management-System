@@ -5,56 +5,75 @@ package Model;
  * @author nipun
  */
 public class Customer {
-    private String customerId;
-    private String customerName;
-    private String customerAddress;
-    private double customerSalary;
+    private String id;
+    private String name;
+    private String address;
+    private double salary;
 
     public Customer() {
     }
 
-    public Customer(String customerId, String customerName, String customerAddress, double customerSalary) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.customerSalary = customerSalary;
+    public Customer(String id, String name, String address, double salary) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.salary = salary;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCustomerAddress() {
-        return customerAddress;
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
     }
 
-    public void setCustomerAddress(String customerAddress) {
-        this.customerAddress = customerAddress;
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public double getCustomerSalary() {
-        return customerSalary;
+    /**
+     * @return the salary
+     */
+    public double getSalary() {
+        return salary;
     }
 
-    public void setCustomerSalary(double customerSalary) {
-        this.customerSalary = customerSalary;
-    }
-    
-    @Override
-    public String toString() {
-        return customerId+","+customerName+","+customerAddress+","+customerSalary;
+    /**
+     * @param salary the salary to set
+     */
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
     
 }

@@ -1,49 +1,82 @@
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author nipun
  */
 public class Order {
-    private String orderId;
-    private String orderDate;
+    private String id;
+    private String date;
     private String customerId;
+    private ArrayList <OrderDetail>orderDetailList;
 
     public Order() {
     }
 
-    public Order(String orderId, String orderDate, String customerId) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
+    public Order(String id, String date, String customerId, ArrayList<OrderDetail> orderDetailList) {
+        this.id = id;
+        this.date = date;
         this.customerId = customerId;
+        this.orderDetailList = orderDetailList;
     }
 
-    public String getOrderId() {
-        return orderId;
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getOrderDate() {
-        return orderDate;
+    /**
+     * @return the date
+     */
+    public String getDate() {
+        return date;
     }
 
-    public void setOrderDate(String orderDate) {
-        this.orderDate = orderDate;
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+        this.date = date;
     }
 
+    /**
+     * @return the customerId
+     */
     public String getCustomerId() {
         return customerId;
     }
 
+    /**
+     * @param customerId the customerId to set
+     */
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
-    
-    @Override
-    public String toString() {
-       return orderId+","+orderDate+","+customerId;
+
+    /**
+     * @return the orderDetailList
+     */
+    public ArrayList <OrderDetail> getOrderDetailList() {
+        return orderDetailList;
     }
+
+    /**
+     * @param orderDetailList the orderDetailList to set
+     */
+    public void setOrderDetailList(ArrayList <OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
+    }
+    
+    
 }

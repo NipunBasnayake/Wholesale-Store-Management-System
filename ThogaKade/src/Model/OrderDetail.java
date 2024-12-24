@@ -4,71 +4,77 @@ package Model;
  *
  * @author nipun
  */
-public class OrderDetails {
+public class OrderDetail {
     private String orderId;
     private String itemCode;
-    private String description;
     private int qty;
     private double unitPrice;
-    private double total;
 
-    public OrderDetails() {
+    public OrderDetail() {
     }
 
-    public OrderDetails(String orderId, String itemCode, String description, int qty, double unitPrice, double total) {
+    public OrderDetail(String orderId, String itemCode, int qty, double unitPrice) {
         this.orderId = orderId;
         this.itemCode = itemCode;
-        this.description = description;
         this.qty = qty;
         this.unitPrice = unitPrice;
-        this.total = total;
     }
 
+    /**
+     * @return the orderId
+     */
     public String getOrderId() {
         return orderId;
     }
 
+    /**
+     * @param orderId the orderId to set
+     */
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
+    /**
+     * @return the itemCode
+     */
     public String getItemCode() {
         return itemCode;
     }
 
+    /**
+     * @param itemCode the itemCode to set
+     */
     public void setItemCode(String itemCode) {
         this.itemCode = itemCode;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    /**
+     * @return the qty
+     */
     public int getQty() {
         return qty;
     }
 
+    /**
+     * @param qty the qty to set
+     */
     public void setQty(int qty) {
         this.qty = qty;
     }
 
+    /**
+     * @return the unitPrice
+     */
     public double getUnitPrice() {
         return unitPrice;
     }
 
+    /**
+     * @param unitPrice the unitPrice to set
+     */
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    } 
+    
 }

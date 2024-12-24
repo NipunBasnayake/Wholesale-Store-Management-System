@@ -1,4 +1,4 @@
-package GUI;
+package view;
 
 public class PalceOrderWindow extends javax.swing.JFrame {
 

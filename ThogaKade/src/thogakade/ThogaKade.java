@@ -1,6 +1,6 @@
 package thogakade;
 
-import GUI.PalceOrderWindow;
+import view.PalceOrderWindow;
 
 public class ThogaKade {
 

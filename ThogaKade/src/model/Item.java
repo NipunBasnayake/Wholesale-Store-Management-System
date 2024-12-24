@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 /**
  *
@@ -75,8 +75,5 @@ public class Item {
     public void setQuantityOnHand(int quantityOnHand) {
         this.quantityOnHand = quantityOnHand;
     }
-
-    
-    
-    
+ 
 }

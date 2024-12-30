@@ -80,11 +80,27 @@ public class PalceOrderView extends javax.swing.JFrame {
         }
     }
     
-    private void loadOrderTable(String code, String desc, Integer qty, Double unitprice){
-        Double total = qty*unitprice;
-        DefaultTableModel dtm = (DefaultTableModel)tblOrders.getModel();
-        Object[] rowData = {code, desc, qty, unitprice, total};
-        dtm.addRow(rowData);
+    private int isAlreadyExists(String code) {
+        DefaultTableModel dtm = (DefaultTableModel) tblOrders.getModel();
+        for (int i = 0; i < tblOrders.getRowCount(); i++) {
+            String tempCode = (String) dtm.getValueAt(i, 0);
+            if (tempCode.equals(code)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    private void calculateTotal() {
+        DefaultTableModel dtm = (DefaultTableModel) tblOrders.getModel();
+
+        double total = 0;
+
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            total += (double) dtm.getValueAt(i, 4);
+
+        }
+        lblTotal.setText(String.valueOf(total));
     }
     
 
@@ -117,14 +133,14 @@ public class PalceOrderView extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtUnitPrice = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrders = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
 
@@ -232,11 +248,11 @@ public class PalceOrderView extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel12.setText("Unit Price");
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton2.setText("Add");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -279,9 +295,9 @@ public class PalceOrderView extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(255, 0, 0));
         jLabel13.setText("Total :");
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel14.setText("0.0");
+        lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(255, 0, 0));
+        lblTotal.setText("0.0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -299,7 +315,7 @@ public class PalceOrderView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton4)
                                 .addGap(36, 36, 36)
@@ -360,7 +376,7 @@ public class PalceOrderView extends javax.swing.JFrame {
             .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
                 .addGap(312, 312, 312)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -412,7 +428,7 @@ public class PalceOrderView extends javax.swing.JFrame {
                                 .addComponent(txtItemDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,7 +439,7 @@ public class PalceOrderView extends javax.swing.JFrame {
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jLabel14))
+                    .addComponent(lblTotal))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -458,17 +474,42 @@ public class PalceOrderView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUnitPriceActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String code = (String)cmbItemCodes.getSelectedItem();
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel)tblOrders.getModel();
+        
+        String code = cmbItemCodes.getSelectedItem().toString();
         String desc = txtItemDesc.getText();
-        Integer qty = Integer.parseInt(txtQty.getText());
+        int qty = Integer.parseInt(txtQty.getText());
         Double unitPrice = Double.parseDouble(txtUnitPrice.getText());
-        loadOrderTable(code, desc, qty, unitPrice);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        Double total = qty*unitPrice;
+        
+        int row = isAlreadyExists(cmbItemCodes.getSelectedItem().toString());
+        
+        if (row == -1) {
+            Object[] rowData = {code, desc, qty, unitPrice, total };
+            dtm.addRow(rowData);
+
+        } else {
+            qty += (int) dtm.getValueAt(row, 2);
+            total += qty * unitPrice;
+
+            tblOrders.setValueAt(qty, row, 2);
+            tblOrders.setValueAt(total, row, 4);
+        }
+        txtQty.setText("");
+
+        calculateTotal();
+        cmbItemCodes.requestFocus();
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DefaultTableModel dtm = (DefaultTableModel)tblOrders.getModel();
-        dtm.setRowCount(0);
+        int selectedRow = tblOrders.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+        DefaultTableModel dtm = (DefaultTableModel) tblOrders.getModel();
+        dtm.removeRow(selectedRow);
+        calculateTotal();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -490,10 +531,10 @@ public class PalceOrderView extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JComboBox<String> cmbCustomerID;
     private javax.swing.JComboBox<String> cmbItemCodes;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -502,7 +543,6 @@ public class PalceOrderView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -514,6 +554,7 @@ public class PalceOrderView extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblCustomerName;
     private javax.swing.JLabel lblOrderId;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tblOrders;
     private javax.swing.JTextField txtItemDesc;
     private javax.swing.JTextField txtOrderDate;

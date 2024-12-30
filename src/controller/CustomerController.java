@@ -7,7 +7,7 @@ package controller;
 import java.sql.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import jdbc.practice.db.DBConnection;
+import thogakade.DB.DBConnection;
 import model.Customer;
 
 /**

@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import jdbc.practice.db.DBConnection;
+import thogakade.DB.DBConnection;
 import model.Order;
 
 /**
@@ -16,8 +16,8 @@ import model.Order;
  * @author nipun
  */
 public class OrderController {
-    
-    public static String getNextOrderID() throws SQLException, ClassNotFoundException{
+
+    public static String getNextOrderID() throws SQLException, ClassNotFoundException {
         ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT id FROM orders ORDER BY id DESC LIMIT 1");
         res.next();
         String lastId = res.getString("id");
@@ -26,7 +26,7 @@ public class OrderController {
         String newId = String.format("D%03d", num);
         return newId;
     }
-    
+
     public static boolean placeOrder(Order order) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
@@ -38,7 +38,6 @@ public class OrderController {
             boolean isAddedOrder = stm.executeUpdate() > 0;
             if (isAddedOrder) {
                 boolean addOrderDetails = OrderDetailController.addOrderDetail(order.getOrderDetailList());
-                System.out.println("Orers table "+addOrderDetails);
                 if (addOrderDetails) {
                     boolean updateStock = ItemController.updateStock(order.getOrderDetailList());
                     if (updateStock) {
@@ -54,5 +53,4 @@ public class OrderController {
         }
     }
 
-    
 }

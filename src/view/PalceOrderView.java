@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Item;
+import model.OrderDetails;
 
 public class PalceOrderView extends javax.swing.JFrame {
 
@@ -138,7 +139,7 @@ public class PalceOrderView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrders = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnPlaceOrder = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -283,11 +284,11 @@ public class PalceOrderView extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton5.setText("Place Order");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnPlaceOrder.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnPlaceOrder.setText("Place Order");
+        btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnPlaceOrderActionPerformed(evt);
             }
         });
 
@@ -319,7 +320,7 @@ public class PalceOrderView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton4)
                                 .addGap(36, 36, 36)
-                                .addComponent(jButton5))
+                                .addComponent(btnPlaceOrder))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -437,7 +438,7 @@ public class PalceOrderView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(lblTotal))
                 .addContainerGap(12, Short.MAX_VALUE))
@@ -497,9 +498,7 @@ public class PalceOrderView extends javax.swing.JFrame {
             tblOrders.setValueAt(total, row, 4);
         }
         txtQty.setText("");
-
         calculateTotal();
-        cmbItemCodes.requestFocus();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -516,9 +515,17 @@ public class PalceOrderView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
+        String orderId = lblOrderId.getText();
+        String orderDate = txtOrderDate.getText();
+        String customerId = cmbCustomerID.getSelectedItem().toString();
+        ArrayList<OrderDetails> orderDetailList = new ArrayList<>();
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void txtOrderDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderDateActionPerformed
         // TODO add your handling code here:
@@ -532,12 +539,12 @@ public class PalceOrderView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JComboBox<String> cmbCustomerID;
     private javax.swing.JComboBox<String> cmbItemCodes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -8,20 +8,20 @@ package model;
  *
  * @author nipun
  */
-public class OrderDetails {
+public class OrderDetail {
     private String orderId;
     private String itemCode;
     private Integer qty;
     private Double unitPrice;
     
-    public OrderDetails(String orderId, String itemCode, Integer qty, Double unitPrice){
+    public OrderDetail(String orderId, String itemCode, Integer qty, Double unitPrice){
         this.orderId=orderId;
         this.itemCode=itemCode;
         this.qty=qty;
         this.unitPrice=unitPrice;
     }
     
-    public OrderDetails(){
+    public OrderDetail(){
     
     }
 

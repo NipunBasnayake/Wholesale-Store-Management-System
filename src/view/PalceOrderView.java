@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Item;
-import model.OrderDetails;
+import model.Order;
+import model.OrderDetail;
 
 public class PalceOrderView extends javax.swing.JFrame {
 
@@ -94,16 +95,17 @@ public class PalceOrderView extends javax.swing.JFrame {
     
     private void calculateTotal() {
         DefaultTableModel dtm = (DefaultTableModel) tblOrders.getModel();
-
         double total = 0;
-
         for (int i = 0; i < dtm.getRowCount(); i++) {
             total += (double) dtm.getValueAt(i, 4);
-
         }
         lblTotal.setText(String.valueOf(total));
     }
     
+    private void clearTable(){
+        DefaultTableModel dtm = (DefaultTableModel)tblOrders.getModel();
+        dtm.setRowCount(0);
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,7 +140,6 @@ public class PalceOrderView extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrders = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
         btnPlaceOrder = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
@@ -276,14 +277,6 @@ public class PalceOrderView extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblOrders);
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setText("Commit");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
         btnPlaceOrder.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnPlaceOrder.setText("Place Order");
         btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -318,8 +311,6 @@ public class PalceOrderView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4)
-                                .addGap(36, 36, 36)
                                 .addComponent(btnPlaceOrder))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -437,11 +428,10 @@ public class PalceOrderView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(lblTotal))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -511,20 +501,36 @@ public class PalceOrderView extends javax.swing.JFrame {
         calculateTotal();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         String orderId = lblOrderId.getText();
         String orderDate = txtOrderDate.getText();
         String customerId = cmbCustomerID.getSelectedItem().toString();
-        ArrayList<OrderDetails> orderDetailList = new ArrayList<>();
+        ArrayList<OrderDetail> orderDetailList = new ArrayList<>();
         
+        DefaultTableModel dtm = (DefaultTableModel)tblOrders.getModel();
         
+        for(int i=0; i<dtm.getRowCount(); i++){
+            String itemCode = (String)dtm.getValueAt(i, 0);
+            int orderQty = (int)dtm.getValueAt(i, 2);
+            double unitPrice = (double)dtm.getValueAt(i, 3);
+            OrderDetail orderDetail = new OrderDetail(orderId, itemCode, orderQty, unitPrice);
+            orderDetailList.add(orderDetail);
+        }
         
+        Order order = new Order(orderId, orderDate, customerId, orderDetailList);
         
-        
+        try {
+            boolean isAdded = OrderController.placeOrder(order);
+            if(isAdded){
+                JOptionPane.showMessageDialog(null, "Order Placed.!");
+                setOrderId();
+                clearTable();
+            }else{
+                JOptionPane.showMessageDialog(null, "Order not Placel.!");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(PalceOrderView.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void txtOrderDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrderDateActionPerformed
@@ -544,7 +550,6 @@ public class PalceOrderView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbItemCodes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

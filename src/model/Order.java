@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author nipun
@@ -11,12 +13,14 @@ package model;
 public class Order {
     private String id;
     private String date;
-    private String custId;
+    private String custId; 
+    private ArrayList<OrderDetail> orderDetailList;
     
-    public Order(String id, String date, String custId){
+    public Order(String id, String date, String custId, ArrayList<OrderDetail> orderDetailList){
         this.id=id;
         this.date=date;
         this.custId=custId;
+        this.orderDetailList=orderDetailList;
     }
     
     public Order(){}
@@ -61,6 +65,20 @@ public class Order {
      */
     public void setCustId(String custId) {
         this.custId = custId;
+    }
+
+    /**
+     * @return the orderDetailList
+     */
+    public ArrayList<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    /**
+     * @param orderDetailList the orderDetailList to set
+     */
+    public void setOrderDetailList(ArrayList<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
     }
     
     

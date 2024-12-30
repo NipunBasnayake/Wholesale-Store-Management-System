@@ -59,5 +59,14 @@ public class ItemController {
         int res = DBConnection.getInstance().getConnection().createStatement().executeUpdate("DELETE FROM item WHERE code='"+code+"'");
         return res>0;
     }
+
+    public static ArrayList<String> getItemCodes() throws ClassNotFoundException, SQLException {
+        ResultSet res = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT code FROM item");
+        ArrayList<String> itemCodes = new ArrayList();
+        while(res.next()){
+            itemCodes.add(res.getString("code"));
+        }
+        return itemCodes;
+    }
     
 }
